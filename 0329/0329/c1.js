@@ -1,19 +1,46 @@
 ﻿"use strict";
-
 let R = null;
 
-let b1 = document.querySelector( "#b1" );
+let chart2 = null;
 
-async function loadd()
-{
-    //fetch()
-    let url = `https://juxinglong.github.io/static/data/states.json`;
+let b2 = document.querySelector("#b2");
 
-   let r =await fetch(url);
-    let rj = awair r.json();
+async function showc() {
+    //fetch async
+    let url = `https://juxinglong.github.io/static/HW/hw6/MIS3033.json`;
+
+   let r= await fetch(url);
+    let rj = await r.json();
+
+    let c2 = document.querySelector("#c2");
+
+    let opts = {
+        type: "pie", //line, bar
+        data: {
+            labels: rj.map(x=>x.lg),
+            datasets: [{data: rj.map(x=>x.n), label:"Number", },],
+        },
+    };
 
 
-    Swal.fire("Load data");
+    if (chart2 != null) {
+
+        chart2.destroy();
+        
+    }
+    c2.innerHTML = ``;
+    chart2 = new Chart(c2, opts);
+
+    opts = {
+        targets: [c2,],
+        rotate: {value:60,duration:3000,},
+    };
+    anime(opts);
+
+    R = rj;
+    console.log(rj);
 }
 
-b1.addEventListener("click", loadd);
+
+
+b2.addEventListener("click", showc);
